@@ -24,11 +24,11 @@ API Testing: Postman
 
 <h3>Project Structure</h3>
 
-├── server/
+├── backend/
 │ ├── models/ # MongoDB Schemas (User, Courier)
 │ ├── routes/ # API Endpoints
-│ └── server.js # Entry point
-├── client/
+│ └── backend.js # Entry point
+├── frontend/
 │ ├── src/
 │ │ ├── components/# Reusable UI components
 │ │ ├── pages/ # Home, Tracking, Admin, Login
@@ -39,12 +39,12 @@ API Testing: Postman
 Clone the repository:
 git clone https://github.com/your-username/satyam-swifttrack.git
 
-Install server Dependencies:
-cd server
+Install backend Dependencies:
+cd backend
 npm install
 
-Install client Dependencies:
-cd ../client
+Install frontend Dependencies:
+cd ../frontend
 npm install
 
 Environment Variables:
@@ -52,8 +52,8 @@ MONGO_URI=your_mongodb_connection_string
 PORT=5000
 
 Run the Application:
-Start server: npm start (inside server folder)
-Start client: npm start (inside client folder)
+Start backend: npm start (inside backend folder)
+Start frontend: npm start (inside frontend folder)
 
 <h3>Contributing</h3>
 Contributions are welcome! Feel free to open a pull request or report issues.
