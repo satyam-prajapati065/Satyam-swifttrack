@@ -27,7 +27,7 @@ const AdminDashboard = () => {
       );
       setAllData(res.data);
       setTimeout(() => setIsSyncing(false), 800);
-    } catch (err) {
+    } catch {
       setIsSyncing(false);
     }
   };

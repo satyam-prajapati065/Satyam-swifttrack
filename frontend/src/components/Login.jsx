@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import Modal from "./Modal";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [modal, setModal] = useState({ open: false, type: "", msg: "" });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
@@ -25,7 +25,7 @@ const Login = () => {
         msg: `Welcome back, ${res.data.name}!`,
       });
       setTimeout(() => window.location.replace("/"), 1500);
-    } catch (err) {
+    } catch {
       setModal({ open: true, type: "error", msg: "Invalid Email or Password" });
     } finally {
       setLoading(false);
