@@ -19,7 +19,9 @@ const Tracking = () => {
 
   const handleTrack = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/track/${trackId}`);
+      const res = await axios.get(
+        `https://satyam-swifttrack.onrender.com/api/track/${trackId}`,
+      );
       setResult(res.data);
       setModal({
         open: true,

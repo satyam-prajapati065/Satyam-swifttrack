@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Package, Clock, MapPin, XCircle } from "lucide-react";
-import Modal from "./Modal"; 
+import Modal from "./Modal";
 
 const UserHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -11,7 +11,7 @@ const UserHistory = () => {
   const fetchOrders = async () => {
     if (user) {
       const res = await axios.get(
-        `http://localhost:5000/api/user-orders/${user.email}`,
+        `https://satyam-swifttrack.onrender.com/api/user-orders/${user.email}`,
       );
       setOrders(res.data);
     }
@@ -23,9 +23,12 @@ const UserHistory = () => {
 
   const handleCancel = async (trackingId) => {
     try {
-      await axios.put(`http://localhost:5000/api/update/${trackingId}`, {
-        status: "Cancelled",
-      });
+      await axios.put(
+        `https://satyam-swifttrack.onrender.com/api/update/${trackingId}`,
+        {
+          status: "Cancelled",
+        },
+      );
 
       setModal({
         open: true,
@@ -33,7 +36,7 @@ const UserHistory = () => {
         msg: `Order ${trackingId} has been cancelled successfully.`,
       });
 
-      fetchOrders(); 
+      fetchOrders();
     } catch (err) {
       setModal({
         open: true,

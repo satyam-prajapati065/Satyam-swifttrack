@@ -23,10 +23,13 @@ const Booking = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/book", {
-        ...formData,
-        userEmail: user.email,
-      });
+      const res = await axios.post(
+        "https://satyam-swifttrack.onrender.com/api/book",
+        {
+          ...formData,
+          userEmail: user.email,
+        },
+      );
       setModal({
         open: true,
         type: "success",

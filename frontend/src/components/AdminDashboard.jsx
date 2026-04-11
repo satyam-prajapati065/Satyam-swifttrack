@@ -22,7 +22,9 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     setIsSyncing(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/all");
+      const res = await axios.get(
+        "https://satyam-swifttrack.onrender.com/api/admin/all",
+      );
       setAllData(res.data);
       setTimeout(() => setIsSyncing(false), 800);
     } catch (err) {
@@ -175,7 +177,7 @@ const AdminDashboard = () => {
                     onChange={async (e) => {
                       try {
                         await axios.put(
-                          `http://localhost:5000/api/update/${item.trackingId}`,
+                          `https://satyam-swifttrack.onrender.com/api/update/${item.trackingId}`,
                           { status: e.target.value },
                         );
                         setModal({
