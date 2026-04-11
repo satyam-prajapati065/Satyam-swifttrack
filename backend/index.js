@@ -17,22 +17,70 @@ mongoose
   .catch((err) => console.log("❌ DB Error:", err));
 
 // 1. Signup API:
+// app.post("/api/auth/signup", async (req, res) => {
+//   try {
+//     const { name, email, password } = req.body;
+
+//     // Check if user already exists
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser)
+//       return res.status(400).json({ message: "Email already registered!" });
+
+//     const newUser = new User({ name, email, password });
+//     await newUser.save();
+//     res.status(201).json({ message: "User registered successfully!" });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+// 1. Signup API:
 app.post("/api/auth/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "Email already registered!" });
 
-    const newUser = new User({ name, email, password });
+    // --- Yeh Logic Add Karo ---
+    let role = "user";
+    if (email === "satyamprajapati065@gmail.com") {
+      role = "admin";
+    }
+    // -------------------------
+
+    const newUser = new User({ name, email, password, role }); // role pass karo yahan
     await newUser.save();
     res.status(201).json({ message: "User registered successfully!" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+// 2. Login API:
+// app.post("/api/auth/login", async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     const user = await User.findOne({ email });
+
+//     if (!user || user.password !== password) {
+//       return res.status(401).json({ message: "Invalid email or password!" });
+//     }
+
+//     let userRole = user.role;
+//     if (user.email === "satyamprajapati065@gmail.com") {
+//       userRole = "admin";
+//     }
+
+//     res.status(200).json({
+//       name: user.name,
+//       email: user.email,
+//       role: userRole,
+//     });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 // 2. Login API:
 app.post("/api/auth/login", async (req, res) => {
@@ -44,15 +92,11 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password!" });
     }
 
-    let userRole = user.role;
-    if (user.email === "satyamprajapati065@gmail.com") {
-      userRole = "admin";
-    }
-
+    // Ab seedha user.role bhejo, DB se apne aap "admin" aayega
     res.status(200).json({
       name: user.name,
       email: user.email,
-      role: userRole,
+      role: user.role,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

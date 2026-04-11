@@ -186,7 +186,7 @@ const AdminDashboard = () => {
                           msg: `Status updated...!`,
                         });
                         fetchData();
-                      } catch (err) {
+                      } catch {
                         setModal({
                           open: true,
                           type: "error",

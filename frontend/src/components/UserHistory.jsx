@@ -37,7 +37,7 @@ const UserHistory = () => {
       });
 
       fetchOrders();
-    } catch (err) {
+    } catch {
       setModal({
         open: true,
         type: "error",
