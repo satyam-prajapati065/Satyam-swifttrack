@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { LogIn, Mail, Lock } from "lucide-react";
+import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import Modal from "./Modal";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [modal, setModal] = useState({ open: false, type: "", msg: "" });
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.post(
         "https://satyam-swifttrack.onrender.com/api/auth/login",
@@ -25,6 +27,8 @@ const Login = () => {
       setTimeout(() => window.location.replace("/"), 1500);
     } catch (err) {
       setModal({ open: true, type: "error", msg: "Invalid Email or Password" });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,6 +64,7 @@ const Login = () => {
                 setCredentials({ ...credentials, email: e.target.value })
               }
               required
+              disabled={loading}
             />
           </div>
           <div className="input-with-icon">
@@ -72,9 +77,30 @@ const Login = () => {
                 setCredentials({ ...credentials, password: e.target.value })
               }
               required
+              disabled={loading}
             />
           </div>
-          <button className="primary-btn">Login to Account</button>
+          <button
+            className="primary-btn"
+            style={{
+              marginTop: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "8px",
+              opacity: loading ? 0.7 : 1,
+            }}
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <Loader2 size={20} className="animate-spin" />
+                Processing...
+              </>
+            ) : (
+              "Login to Account"
+            )}
+          </button>
         </form>
         <p
           style={{

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { UserPlus, Mail, Lock, User, ShieldCheck } from "lucide-react";
+import { UserPlus, Mail, Lock, User, ShieldCheck, Loader2 } from "lucide-react"; // Loader icon add kiya
 import Modal from "./Modal";
 
 const Signup = () => {
@@ -11,15 +11,21 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState({ open: false, type: "", msg: "" });
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
       setModal({ open: true, type: "error", msg: "Passwords do not match!" });
       return;
     }
+
+    setLoading(true);
+
     try {
       await axios.post(
         "https://satyam-swifttrack.onrender.com/api/auth/signup",
@@ -41,6 +47,8 @@ const Signup = () => {
         type: "error",
         msg: err.response?.data?.message || "Signup Failed",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,6 +74,7 @@ const Signup = () => {
         </div>
 
         <form onSubmit={handleSignup}>
+          {/* Inputs same rahenge... */}
           <div className="input-with-icon">
             <User size={18} className="field-icon" />
             <input
@@ -75,6 +84,7 @@ const Signup = () => {
                 setFormData({ ...formData, name: e.target.value })
               }
               required
+              disabled={loading}
             />
           </div>
           <div className="input-with-icon">
@@ -87,6 +97,7 @@ const Signup = () => {
                 setFormData({ ...formData, email: e.target.value })
               }
               required
+              disabled={loading}
             />
           </div>
           <div className="input-with-icon">
@@ -99,6 +110,7 @@ const Signup = () => {
                 setFormData({ ...formData, password: e.target.value })
               }
               required
+              disabled={loading}
             />
           </div>
           <div className="input-with-icon">
@@ -111,12 +123,34 @@ const Signup = () => {
                 setFormData({ ...formData, confirmPassword: e.target.value })
               }
               required
+              disabled={loading}
             />
           </div>
-          <button className="primary-btn" style={{ marginTop: "10px" }}>
-            Sign Up
+
+          {/* 4. Button par condition lagayi */}
+          <button
+            className="primary-btn"
+            style={{
+              marginTop: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "8px",
+              opacity: loading ? 0.7 : 1,
+            }}
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <Loader2 size={20} className="animate-spin" />
+                Processing...
+              </>
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
+
         <p
           style={{
             textAlign: "center",
@@ -134,6 +168,7 @@ const Signup = () => {
           </Link>
         </p>
       </div>
+
       <Modal
         isOpen={modal.open}
         type={modal.type}
