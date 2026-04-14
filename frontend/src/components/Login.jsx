@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
+import { LogIn, Mail, Lock, Loader2, Eye, EyeOff } from "lucide-react"; // Icons add kiye
 import Modal from "./Modal";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [modal, setModal] = useState({ open: false, type: "", msg: "" });
-  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Toggle state
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -67,11 +67,12 @@ const Login = () => {
               disabled={loading}
             />
           </div>
-          <div className="input-with-icon">
+
+          <div className="input-with-icon" style={{ position: "relative" }}>
             <Lock size={18} className="field-icon" />
             <input
               className="custom-input"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               onChange={(e) =>
                 setCredentials({ ...credentials, password: e.target.value })
@@ -79,7 +80,21 @@ const Login = () => {
               required
               disabled={loading}
             />
+            {/* Toggle Button */}
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "15px",
+                top: "12px",
+                cursor: "pointer",
+                color: "#64748b",
+              }}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </div>
           </div>
+
           <button
             className="primary-btn"
             style={{
@@ -94,14 +109,14 @@ const Login = () => {
           >
             {loading ? (
               <>
-                <Loader2 size={20} className="animate-spin" />
-                Processing...
+                <Loader2 size={20} className="animate-spin" /> Processing...
               </>
             ) : (
               "Login to Account"
             )}
           </button>
         </form>
+        {/* Signup Link */}
         <p
           style={{
             textAlign: "center",
