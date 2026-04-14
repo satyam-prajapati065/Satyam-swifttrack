@@ -604,6 +604,8 @@
 @media (max-width: 850px) {
   .menu-toggle {
     display: block;
+    position: relative;
+    z-index: 2000;
   }
 
   .nav-links {
