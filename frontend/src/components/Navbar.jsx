@@ -53,6 +53,8 @@ const Navbar = () => {
         <span>Satyam SwiftTrack</span>
       </div>
 
+      {isMenuOpen && <div className="menu-overlay" onClick={closeMenu}></div>}
+
       {/* --- Mobile Menu Button --- */}
       <button
         className="menu-toggle"
@@ -125,7 +127,11 @@ const Navbar = () => {
           </>
         ) : (
           <div className="auth-flex">
-            <Link to="/login" className="nav-auth-btn login-special" onClick={closeMenu}>
+            <Link
+              to="/login"
+              className="nav-auth-btn login-special"
+              onClick={closeMenu}
+            >
               <LogIn size={18} /> Login
             </Link>
             <Link
